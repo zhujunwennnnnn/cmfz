@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cmfz.dao.BannerDao">
+    <insert id="insert" parameterType="Banner">
+        insert into banner values (#{id},#{title},#{img},#{create_date},#{status},#{other})
+    </insert>
+
+    <delete id="delete">
+        delete from banner where id in
+        <foreach collection="array" open="(" index="0" item="id" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <update id="update" parameterType="Banner">
+        update banner
+        <set>
+            <if test="title!=null">
+                title=#{title},
+            </if>
+            <if test="img!=null">
+                img=#{img},
+            </if>
+            <if test="create_date!=null">
+                create_date=#{create_date},
+            </if>
+            <if test="status!=null">
+                status=#{status}
+            </if>
+        </set>
+        where id=#{id}
+    </update>
+
+    <select id="select" resultType="Banner">
+        select id ,title , img ,create_date , status from banner limit #{start} ,#{rows}
+    </select>
+
+    <select id="selectByContent" resultType="java.lang.Integer">
+        select count(id) from banner
+    </select>
+
+    <select id="selectAll" resultType="Banner">
+         select id ,title , img ,create_date , status from banner where status="激活"
+    </select>
+</mapper>

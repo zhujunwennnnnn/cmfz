@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cmfz.dao.UserDao">
+
+    <insert id="insert" parameterType="User">
+        insert into t_user values (#{id},#{phone_number},#{password},#{name},#{dharma},#{head_img},#{sex},#{address},#{sign},#{guru_id},#{last_date},#{create_date},#{status},#{salt},#{other})
+    </insert>
+
+    <update id="update" parameterType="User">
+        update t_user
+        <set>
+            <if test="password!=null">password=#{password},</if>
+            <if test="dhmarma!=null">dhmarma=#{dhmarma},</if>
+            <if test="head_img!=null">head_img=#{head_img},</if>
+            <if test="sex!=null">sex=#{sex},</if>
+            <if test="address!=null">address=#{address},</if>
+            <if test="sign!=null">sign=#{sign},</if>
+            <if test="last_date!=null">last_date=#{last_date},</if>
+            <if test="status!=null">status=#{status},</if>
+            <if test="salt!=null">salt=#{salt}</if>
+        </set>
+        where id=#{id}
+    </update>
+
+
+    <select id="select" resultType="com.cmfz.vo.SevenMap">
+    SELECT
+       DATE_FORMAT( create_date, '%Y-%m-%d' ) as date,
+        COUNT(ID) as count
+    FROM
+        t_user
+    WHERE
+      create_date BETWEEN SUBDATE( DATE( NOW( ) ), INTERVAL 7 DAY ) AND DATE( NOW( ) )
+    GROUP BY  date
+    </select>
+
+    <select id="selectByMonth" resultType="com.cmfz.vo.MapDat">
+        select count(id) as count,MONTH(CREATE_DATE) as month
+        from t_user
+        group by month(create_date)
+    </select>
+
+    <select id="selectMap" resultType="com.cmfz.vo.Mapmap">
+        select count(id) as count,address
+        from t_user
+        group by address
+    </select>
+</mapper>

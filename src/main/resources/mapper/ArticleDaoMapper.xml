@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cmfz.dao.ArticleDao">
+
+    <select id="page" resultType="Article" parameterType="java.lang.Integer">
+        select id ,title ,author,content,guru_id,create_date,status,other from article limit #{start},#{rows}
+    </select>
+
+    <select id="select" resultType="Article">
+        select id ,title ,author,content,guru_id,create_date,status,other from article
+    </select>
+
+    <select id="selectById" resultType="Article" parameterType="java.lang.String">
+        select id ,title ,author,content,guru_id,create_date,status,other from article where id=#{id}
+    </select>
+
+    <select id="count" resultType="java.lang.Integer">
+        select count(id) from article
+    </select>
+
+    <delete id="delete" parameterType="java.lang.String">
+        delete from article where id in
+        <foreach collection="array" close=")" open="(" item="id" separator=",">
+            #{id}
+        </foreach>
+    </delete>
+
+    <insert id="insert" parameterType="Article">
+        insert into article values(#{id},#{title},#{author},#{content},#{guru_id},#{create_date},#{status},#{other})
+    </insert>
+
+    <update id="update" parameterType="Article">
+        update article
+        <set>
+            <if test="title!=null">title=#{title},</if>
+            <if test="author!=null">author=#{author},</if>
+            <if test="content!=null">content=#{content},</if>
+            <if test="guru_id!=null">guru_id=#{guru_id},</if>
+            <if test="create_date!=null">create_date=#{create_date},</if>
+            <if test="status!=null">status=#{status}</if>
+        </set>
+        where id = #{id}
+    </update>
+
+</mapper>
