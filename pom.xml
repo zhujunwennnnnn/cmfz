@@ -132,6 +132,14 @@
             <artifactId>goeasy-sdk</artifactId>
             <version>0.3.8</version>
         </dependency>
+        <!--
+           redis
+       -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+        </dependency>
+
     </dependencies>
     <!--
             获取goeasy下载依赖路径

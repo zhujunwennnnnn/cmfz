@@ -1,5 +1,7 @@
 package com.cmfz.service.impl;
 
+import com.cmfz.annotation.AddCache;
+import com.cmfz.annotation.ClearCache;
 import com.cmfz.dao.BannerDao;
 import com.cmfz.entity.Banner;
 import com.cmfz.service.BannerService;
@@ -29,7 +31,7 @@ public class BannerServiceImpl implements BannerService {
         bannerDao.insert(banner);
     }
 
-    @Override
+    @ClearCache
     public void delete(String[] ids) {
         for (String id : ids) {
             System.out.println(id);
@@ -37,7 +39,7 @@ public class BannerServiceImpl implements BannerService {
         bannerDao.delete(ids);
     }
 
-    @Override
+    @ClearCache
     public void update(Banner banner) {
         System.out.println("service____"+banner);
         if(banner.getImg()==""){
@@ -47,7 +49,7 @@ public class BannerServiceImpl implements BannerService {
         bannerDao.update(banner);
     }
 
-    @Override
+    @AddCache
     @Transactional(propagation = Propagation.SUPPORTS)
     public Map<String,Object> select(Integer page , Integer rows){
         Map<String, Object> map = new HashMap<>();
@@ -66,7 +68,7 @@ public class BannerServiceImpl implements BannerService {
         return map;
     }
 
-    @Override
+    @AddCache
     public List<Banner> selectAll() {
         return bannerDao.selectAll();
     }

@@ -36,4 +36,6 @@ spring:
   jackson:
     date-format: yyyy-MM-dd
     time-zone: GMT+8
+  redis:
+    database: 0
 
