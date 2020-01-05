@@ -1,5 +1,7 @@
 package com.cmfz.service.impl;
 
+import com.cmfz.annotation.AddCache;
+import com.cmfz.annotation.ClearCache;
 import com.cmfz.dao.AlbumDao;
 import com.cmfz.dao.ChapterDao;
 import com.cmfz.entity.Album;
@@ -34,45 +36,47 @@ public class ChapterServiceImpl implements ChapterService {
     @Autowired
     private AlbumDao albumDao;
 
-    @Override
+    @ClearCache
     public String insert(Chapter chapter) {
         chapterDao.insert(chapter);
         return "ok";
     }
 
-    @Override
+
+    @ClearCache
     public String delete(String[] id) {
         chapterDao.delete(id);
         return "ok";
     }
 
-    @Override
+    @ClearCache
     public String update(Chapter chapter) {
         chapterDao.update(chapter);
         return "ok";
     }
 
-    @Override
+    @AddCache
     public Integer count() {
         return chapterDao.count();
     }
 
-    @Override
+    @AddCache
     public Integer counts(String album_id) {
         return chapterDao.counts(album_id);
     }
 
-    @Override
+    @AddCache
     public Chapter selectById(String id) {
         return chapterDao.selectById(id);
     }
 
-    @Override
+    @AddCache
     public List<Chapter> selectByAlbum(String id) {
         return chapterDao.selectByAlbum(id);
     }
 
     @Transactional(propagation = Propagation.SUPPORTS)
+    @AddCache
     public Map<String, Object> page(Integer page, Integer rows, String album_id) {
         Map<String, Object> map = new HashMap<>();
         //获取总条数
@@ -92,7 +96,7 @@ public class ChapterServiceImpl implements ChapterService {
     }
 
 
-    @Override
+    @ClearCache
     public void upload(MultipartFile src, HttpSession session, String chapterId) {
         Chapter chapter = new Chapter();
         //获取文件名字
@@ -134,7 +138,7 @@ public class ChapterServiceImpl implements ChapterService {
         chapterDao.update(chapter);
     }
 
-    @Override
+    @ClearCache
     public String download(String src, HttpServletResponse response, HttpServletRequest request) {
         FileInputStream fileInputStream = null;
         ServletOutputStream outputStream = null;
