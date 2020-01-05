@@ -1,5 +1,7 @@
 package com.cmfz.service.impl;
 
+import com.cmfz.annotation.AddCache;
+import com.cmfz.annotation.ClearCache;
 import com.cmfz.dao.ArticleDao;
 import com.cmfz.entity.Album;
 import com.cmfz.entity.Article;
@@ -27,6 +29,7 @@ public class ArticleServiceImpl implements ArticleService {
     private ArticleDao articleDao;
 
     @Transactional(propagation = Propagation.SUPPORTS)
+    @AddCache
     public Map<String, Object> page(Integer page, Integer rows) {
         Map<String, Object> map = new HashMap<>();
         //总条数
@@ -44,11 +47,13 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
+    @ClearCache
     public void delete(String[] id) {
         articleDao.delete(id);
     }
 
     @Override
+    @ClearCache
     public void insert(Article article) {
         article.setId(UUID.randomUUID().toString().replace("-",""));
         article.setCreate_date(new Date());
@@ -56,11 +61,13 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
+    @ClearCache
     public void update(Article article) {
         articleDao.update(article);
     }
 
     //上传 回显图片
+    @ClearCache
     public Map<String, Object> upload(MultipartFile img, HttpServletRequest request) {
         Map<String, Object> map = new HashMap<>();
         String realPath = request.getSession().getServletContext().getRealPath("/upload/kindimg");
@@ -110,7 +117,7 @@ public class ArticleServiceImpl implements ArticleService {
 }
    * */
     //回显图片空间
-    @Override
+    @ClearCache
     public Map<String, Object> getAllImg(HttpServletRequest request) {
         Map<String, Object> map = new HashMap<>();
         //获取文件夹路径
@@ -158,13 +165,13 @@ public class ArticleServiceImpl implements ArticleService {
         return map;
     }
 
-    @Override
+    @AddCache
     public Article SelectById(String id) {
         Article article = articleDao.selectById(id);
         return article;
     }
 
-    @Override
+    @AddCache
     public List<Article> select() {
         return articleDao.select();
     }

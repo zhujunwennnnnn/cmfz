@@ -38,4 +38,5 @@ spring:
     time-zone: GMT+8
   redis:
     database: 0
+    host: 192.168.230.239
 

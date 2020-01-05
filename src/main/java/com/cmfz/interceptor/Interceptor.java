@@ -54,7 +54,7 @@ public class Interceptor {
 
     @After("@annotation(com.cmfz.annotation.ClearCache)")
     public void after(JoinPoint joinPoint){
-        String target = (String) joinPoint.getTarget();
+        String target = joinPoint.getTarget().getClass().getName();
         System.out.println("清除缓存");
         redisTemplate.delete(target);
     }

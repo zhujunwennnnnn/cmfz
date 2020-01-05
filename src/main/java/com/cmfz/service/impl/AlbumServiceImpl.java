@@ -1,5 +1,7 @@
 package com.cmfz.service.impl;
 
+import com.cmfz.annotation.AddCache;
+import com.cmfz.annotation.ClearCache;
 import com.cmfz.dao.AlbumDao;
 import com.cmfz.entity.Album;
 import com.cmfz.service.AlbumService;
@@ -22,20 +24,20 @@ public class AlbumServiceImpl implements AlbumService {
     @Autowired
     private AlbumDao albumDao;
 
-    @Override
+    @ClearCache
     public String insert(Album album) {
 
         albumDao.insert(album);
         return "ok";
     }
 
-    @Override
+    @ClearCache
     public String delete(String[] id) {
         albumDao.delete(id);
         return "ok";
     }
 
-    @Override
+    @ClearCache
     public void upload(MultipartFile img, HttpSession session, String albumId) {
         //获取名字
         String filename = img.getOriginalFilename();
@@ -58,7 +60,7 @@ public class AlbumServiceImpl implements AlbumService {
 
     }
 
-    @Override
+    @ClearCache
     public String update(Album album) {
         if(album.getImg()==""){
             album.setImg(null);
@@ -71,7 +73,7 @@ public class AlbumServiceImpl implements AlbumService {
     }
 
     @Transactional(propagation = Propagation.SUPPORTS)
-    @Override
+    @AddCache
     public Map<String, Object> page(Integer page, Integer rows) {
         Map<String, Object> map = new HashMap<>();
         //总条数
@@ -90,12 +92,12 @@ public class AlbumServiceImpl implements AlbumService {
     }
 
 
-    @Override
+    @AddCache
     public List<Album> select() {
         return albumDao.select();
     }
 
-    @Override
+    @AddCache
     public Album selectById(String id) {
         return albumDao.selectById(id);
     }

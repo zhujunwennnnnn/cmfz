@@ -26,7 +26,7 @@ public class BannerServiceImpl implements BannerService {
     @Autowired
     private BannerDao bannerDao;
 
-    @Override
+    @ClearCache
     public void insert(Banner banner) {
         bannerDao.insert(banner);
     }
@@ -73,7 +73,7 @@ public class BannerServiceImpl implements BannerService {
         return bannerDao.selectAll();
     }
 
-    @Override
+    @ClearCache
     public void upload(MultipartFile img, String bannerId, HttpSession session) {
         //获取upload路径
         String realPath = session.getServletContext().getRealPath("/upload/img");
